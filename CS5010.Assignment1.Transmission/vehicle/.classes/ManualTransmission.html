@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ManualTransmission</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">vehicle</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ManualTransmission (vehicle)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ManualTransmission</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package vehicle;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * This is an interface for manual transmission which represents the vehicle and it&#39;s details about
+<i>5</i>&nbsp; * things like status, speed, gear as well as operations of increasing/decreasing gear and speed.
+<i>6</i>&nbsp; */
+<i>7</i>&nbsp;public interface ManualTransmission {
+<i>8</i>&nbsp;  /**
+<i>9</i>&nbsp;   * Return the status of this transmission as a String. Status is the current state of the vehicle
+<i>10</i>&nbsp;   * and its capabilities of what the vehicle can do at a given moment. Status will refer to
+<i>11</i>&nbsp;   * following things in our current context: “OK: everything is OK.”: this is the status if the
+<i>12</i>&nbsp;   * speed was changed successfully without changing gears, or the gear was changed successfully
+<i>13</i>&nbsp;   * without changing speed.
+<i>14</i>&nbsp;   * 1.“OK: you may increase the gear.”: this is the status if the speed was increased
+<i>15</i>&nbsp;   * successfully, but it is now within the range of the next gear (remember that adjacent gear
+<i>16</i>&nbsp;   * ranges may overlap)
+<i>17</i>&nbsp;   * 2. “OK: you may decrease the gear.”: this is the status if the speed was decreased
+<i>18</i>&nbsp;   * successfully, but it is now within the range of the previous gear (remember that adjacent gear
+<i>19</i>&nbsp;   * ranges may overlap)
+<i>20</i>&nbsp;   * 3.“Cannot increase speed, increase gear first.”: this is the status if the speed cannot be
+<i>21</i>&nbsp;   * increased more unless the gear is increased first. This implies that the intended speed is too
+<i>22</i>&nbsp;   * high for the current gear.
+<i>23</i>&nbsp;   * 4.“Cannot decrease speed, decrease gear first.”: this is the status if the speed cannot be
+<i>24</i>&nbsp;   * decreased more unless the gear is decreased first. This implies that the intended speed is too
+<i>25</i>&nbsp;   * low for the current gear.
+<i>26</i>&nbsp;   * 5.“Cannot increase gear, increase speed first.”: this is the status if the gear cannot be
+<i>27</i>&nbsp;   * increased more unless the speed is increased first. This implies that the current speed will be
+<i>28</i>&nbsp;   * too low for the next gear.
+<i>29</i>&nbsp;   * 6.“Cannot decrease gear, decrease speed first.”: this is the status if the gear cannot be
+<i>30</i>&nbsp;   * decreased more unless the speed is decreased first. This implies that the current speed will be
+<i>31</i>&nbsp;   * too high for the previous gear.
+<i>32</i>&nbsp;   * 7.“Cannot increase speed. Reached maximum speed.”: this is the status if the speed cannot be
+<i>33</i>&nbsp;   * increased as it will go beyond the speed limit of the vehicle
+<i>34</i>&nbsp;   * 8.“Cannot decrease speed. Reached minimum speed.”: this is the status if the speed cannot be
+<i>35</i>&nbsp;   * decreased as it is already 0
+<i>36</i>&nbsp;   * 9.“Cannot increase gear. Reached maximum gear.”: this is the status if the gear cannot be
+<i>37</i>&nbsp;   * increased as it is already in gear 5
+<i>38</i>&nbsp;   * 10.“Cannot decrease gear. Reached minimum gear.”: this is the status if the gear cannot be
+<i>39</i>&nbsp;   * decreased as it is already in gear 1
+<i>40</i>&nbsp;   *
+<i>41</i>&nbsp;   * @return returns the current status of the manual transmission.
+<i>42</i>&nbsp;   */
+<i>43</i>&nbsp;  String getStatus();
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;  /**
+<i>46</i>&nbsp;   * Return the current speed of the vehicle as a whole number.
+<i>47</i>&nbsp;   *
+<i>48</i>&nbsp;   * @return returns the current speed of the vehicle as a whole number.
+<i>49</i>&nbsp;   */
+<i>50</i>&nbsp;  int getSpeed();
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;  /**
+<i>53</i>&nbsp;   * Return the current gear vehicle is in.
+<i>54</i>&nbsp;   *
+<i>55</i>&nbsp;   * @return returns the current gear in which vehicle is as a whole number.
+<i>56</i>&nbsp;   */
+<i>57</i>&nbsp;  int getGear();
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;  /**
+<i>60</i>&nbsp;   * Increases the speed of the vehicle. Amount of speed increase can be 1 at a time. Maximum speed
+<i>61</i>&nbsp;   * will be the highest speed of the 5th gear, it should be input by the user.
+<i>62</i>&nbsp;   *
+<i>63</i>&nbsp;   * @return the transmission object, in case the speed cannot be increased, returns the
+<i>64</i>&nbsp;   *     transmission object with the same speed as it was earlier.
+<i>65</i>&nbsp;   */
+<i>66</i>&nbsp;  ManualTransmission increaseSpeed();
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;  /**
+<i>69</i>&nbsp;   * Decrease the speed of the vehicle. Amount of speed decrease can be 1 at a time.
+<i>70</i>&nbsp;   *
+<i>71</i>&nbsp;   * @return the transmission object, in case the speed cannot be decreased, returns the
+<i>72</i>&nbsp;   *     transmission object with the same speed as it was earlier. Minimum speed will be 0.
+<i>73</i>&nbsp;   */
+<i>74</i>&nbsp;  ManualTransmission decreaseSpeed();
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;  /**
+<i>77</i>&nbsp;   * Increase the gear in the transmission of the vehicle by 1 without changing the speed of the
+<i>78</i>&nbsp;   * vehicle. Starting gear of the transmission would be 1 and last gear of the transmission is 5,
+<i>79</i>&nbsp;   * it should be not allowed to go beyond it.
+<i>80</i>&nbsp;   *
+<i>81</i>&nbsp;   * @return the transmission object, in case the gear cannot be increased, returns the transmission
+<i>82</i>&nbsp;   *     object with the same speed as it was earlier.
+<i>83</i>&nbsp;   */
+<i>84</i>&nbsp;  ManualTransmission increaseGear();
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;  /**
+<i>87</i>&nbsp;   * Decrease the gear in the transmission of the vehicle by 1 without changing the speed of the
+<i>88</i>&nbsp;   * vehicle. Highest gear of the transmission should be 5 abd initial gear is 1, it should not be
+<i>89</i>&nbsp;   * allowed to go below it.
+<i>90</i>&nbsp;   *
+<i>91</i>&nbsp;   * @return the transmission object, in case the gear cannot be decreased, returns the transmission
+<i>92</i>&nbsp;   *     object with the same speed as it was earlier.
+<i>93</i>&nbsp;   */
+<i>94</i>&nbsp;  ManualTransmission decreaseGear();
+<i>95</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-09-16 13:37</div>
+</div>
+</body>
+</html>
